@@ -25,27 +25,27 @@ void HUD_Frame(double dTime) {
 
 void HUD_PlayerMove( struct playermove_s *ppmove, int server )
 {
-	g_Client.HUD_PlayerMove( ppmove, server );
+    g_Client.HUD_PlayerMove( ppmove, server );
 }
 
 int pfnHookUserMsg( char *szMsgName, pfnUserMsgHook pfn) {
-	return g_Engine.pfnHookUserMsg(szMsgName, pfn);
+    return g_Engine.pfnHookUserMsg(szMsgName, pfn);
 }
 
 /* Hooks */
 void HookEngine(void) {
-	memcpy( &g_Engine, (LPVOID)g_pEngine, sizeof( cl_enginefunc_t ) );
-	g_pEngine->pfnHookUserMsg = pfnHookUserMsg;
+    memcpy( &g_Engine, (LPVOID)g_pEngine, sizeof( cl_enginefunc_t ) );
+    g_pEngine->pfnHookUserMsg = pfnHookUserMsg;
 }
 
 /*void HookStudio(void) {
-	memcpy( &g_Studio, (LPVOID)g_pStudio, sizeof( engine_studio_api_t ) );
-	g_pStudio->StudioEntityLight = StudioEntityLight;
+    memcpy( &g_Studio, (LPVOID)g_pStudio, sizeof( engine_studio_api_t ) );
+    g_pStudio->StudioEntityLight = StudioEntityLight;
 }*/
 
 void HookClient(void) {
-	memcpy(&g_Client, (LPVOID)g_pClient, sizeof(cl_clientfunc_t));
-	g_pClient->HUD_Frame = HUD_Frame;
-	g_pClient->HUD_Redraw = HUD_Redraw;
-	g_pClient->HUD_PlayerMove = HUD_PlayerMove;
+    memcpy(&g_Client, (LPVOID)g_pClient, sizeof(cl_clientfunc_t));
+    g_pClient->HUD_Frame = HUD_Frame;
+    g_pClient->HUD_Redraw = HUD_Redraw;
+    g_pClient->HUD_PlayerMove = HUD_PlayerMove;
 }

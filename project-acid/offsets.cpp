@@ -2,8 +2,8 @@
 
 Offsets::Offsets() {
     hwBase = (DWORD)GetModuleHandle("hw.dll");
-	hwSize = (DWORD)0x0122A000; // v43
-	hwEnd = hwBase + hwSize - 1;
+    hwSize = (DWORD)0x0122A000; // v43
+    hwEnd = hwBase + hwSize - 1;
 
     if(hwBase && hwSize) this->bInit = true;
 }

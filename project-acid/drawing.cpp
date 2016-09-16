@@ -9,7 +9,7 @@ int Drawing::DrawString(int x, int y, int r, int g, int b, char *szBuffer, ...) 
     va_end(args);
 
     g_Engine.pfnDrawSetTextColor((float)r / 255.0f, (float)g / 255.0f, (float)b / 255.0f);
-	return g_Engine.pfnDrawConsoleString(x, y, szTmp);
+    return g_Engine.pfnDrawConsoleString(x, y, szTmp);
 }
 
 Drawing g_Drawing;
