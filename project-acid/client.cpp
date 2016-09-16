@@ -9,7 +9,7 @@
 void HUD_Redraw(float time, int intermission) {
     g_Client.HUD_Redraw(time, intermission);
 
-    g_Drawing.DrawString(10, 120, 255, 255, 255, "project-lsd");
+    g_Drawing.DrawString(10, 120, 255, 255, 255, "project-acid");
 }
 
 void HUD_Frame(double dTime) {

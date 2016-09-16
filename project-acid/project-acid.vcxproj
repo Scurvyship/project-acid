@@ -146,6 +146,7 @@
     <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="drawing.cpp" />
     <ClCompile Include="offsets.cpp" />
+    <ClCompile Include="usermsg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllMain.h" />
