@@ -250,3 +250,8 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Custom
+project-acid/HLSDK
+project-acid/offsets_old.cpp
+project-acid/offsets_old.h
