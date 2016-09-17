@@ -102,15 +102,15 @@ void HookStudio(void);
 struct local_s {
     int iIndex;
     int iTeam;
-    int iFlags;
+    //int iFlags;
     int iClip;
-    int iWeaponID;
-    int iFOV;
-    int iUseHull;
-    int iMovetype;
-    bool bInReload;
+    //int iWeaponID;
+    //int iFOV;
+    //int iUseHull;
+    //int iMovetype;
+    //bool bInReload;
     bool bAlive;
-    float m_flNextPrimaryAttack;
+    //float m_flNextPrimaryAttack;
     float flXYspeed;
     float flMaxSpeed;
     float flHeight;
@@ -126,13 +126,12 @@ struct local_s {
 extern local_s g_Local;
 
 struct player_s {
-    int iUID; // uniqueID
     int iTeam;
-    bool bVisible;
+    //bool bVisible;
     bool bUpdated;
     //bool bDucked;
     bool bAlive;
-    float fDistance;
+    //float fDistance;
     vec3_t vHitboxOrigin[12];
     vec3_t vOrigin;
     hud_player_info_t Info;

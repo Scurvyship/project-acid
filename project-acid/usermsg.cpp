@@ -6,6 +6,8 @@ pfnUserMsgHook pDeathMsg  = NULL;
 pfnUserMsgHook pCurWeapon = NULL;
 pfnUserMsgHook pSetFOV    = NULL;
 
+int g_PlayerTeam[33];
+
 int TeamInfo(const char *pszName, int iSize, void *pbuf) {
     BEGIN_READ(pbuf, iSize);
     int iIndex = READ_BYTE();
@@ -34,7 +36,6 @@ int DeathMsg(const char *pszName, int iSize, void *pbuf) {
     char* pszWeaponName = READ_STRING();
     g_Player[iVictim].bUpdated = false;
     g_Player[iVictim].bAlive   = false;
-    g_Player[iVictim].bVisible = false;
     if(iVictim == g_Local.iIndex) g_Local.bAlive = false;
     return (*pDeathMsg)(pszName, iSize, pbuf);
 }

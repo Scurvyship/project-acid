@@ -2,7 +2,6 @@
 #include "DllMain.h"
 #include "offsets.h"
 
-// v43
 cl_clientfunc_t *g_pClient = nullptr;
 cl_clientfunc_t g_Client;
 cl_enginefunc_t *g_pEngine = nullptr;
@@ -61,7 +60,10 @@ void __stdcall DoHooks() {
 
 BOOL _declspec(dllexport) APIENTRY DllMain( HANDLE hModule, DWORD dwReason, LPVOID lpReserved ) {
     if(dwReason == DLL_PROCESS_ATTACH ) {
-        CreateThread( NULL, NULL, (LPTHREAD_START_ROUTINE)DoHooks, NULL, NULL, NULL );
+        AllocConsole();
+        freopen("CONOUT$", "w", stdout);
+
+        CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)DoHooks, NULL, NULL, NULL);
     }
     return TRUE;
 }
