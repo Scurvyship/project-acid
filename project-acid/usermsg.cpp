@@ -1,4 +1,5 @@
 #include "DllMain.h"
+#include "HLSDK\misc\parsemsg.cpp"
 #define HOOK_MSG(msgName) if(!strcmp(szMsgName, #msgName)) { p##msgName = pfn; return g_Engine.pfnHookUserMsg(szMsgName, ##msgName); }
 
 pfnUserMsgHook pTeamInfo  = NULL;
