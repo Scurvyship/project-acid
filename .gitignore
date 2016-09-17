@@ -255,3 +255,5 @@ paket-files/
 project-acid/HLSDK
 project-acid/offsets_old.cpp
 project-acid/offsets_old.h
+project-acid/detours.h
+project-acid/detours.lib

@@ -8,6 +8,8 @@ cl_enginefunc_t *g_pEngine = nullptr;
 cl_enginefunc_t g_Engine;
 engine_studio_api_t *g_pStudio = nullptr;
 engine_studio_api_t g_Studio;
+PreS_DynamicSound_t PreS_DynamicSound_s = nullptr;
+DWORD dwSound = NULL;
 
 int __cdecl AddCommand(char *szCmdName, void (*function)(void)) {
     __asm {
@@ -32,6 +34,7 @@ void __stdcall DoHooks() {
     g_pClient = (cl_clientfunc_t*)g_Offsets.GetClientFuncs();
     g_pEngine = (cl_enginefunc_t*)g_Offsets.GetEngineFuncs();
     g_pStudio = (engine_studio_api_t*)g_Offsets.GetStudioFuncs();
+    dwSound   = g_Offsets.PreS_DynamicSound();
 
     if(!g_pClient || !g_pEngine || !g_pStudio) {
         MessageBox(NULL, "Hook failed.", "acid", MB_OK);

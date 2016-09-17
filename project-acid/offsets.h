@@ -13,4 +13,5 @@ class Offsets {
         DWORD GetEngineFuncs();
         DWORD GetClientFuncs();
         DWORD GetStudioFuncs();
+        DWORD Offsets::PreS_DynamicSound();
 };

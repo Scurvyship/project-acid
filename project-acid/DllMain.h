@@ -28,6 +28,7 @@ using namespace std;
 #include "HLSDK/common/event_api.h"
 #include "HLSDK/common/screenfade.h"
 #include "HLSDK/engine/keydefs.h"
+#include "detours.h"
 
 typedef struct cl_clientfuncs_s {
     int ( *Initialize ) ( cl_enginefunc_t *pEnginefuncs, int iVersion );
@@ -81,13 +82,16 @@ extern cl_enginefunc_t *g_pEngine;
 extern cl_enginefunc_t g_Engine;
 extern engine_studio_api_t *g_pStudio;
 extern engine_studio_api_t g_Studio;
-extern SCREENINFO g_Screen;
+
+// PreS_DynamicSound
+typedef void(*PreS_DynamicSound_t)(int, DWORD, char *, float *, float, float, int, int);
+extern PreS_DynamicSound_t PreS_DynamicSound_s;
+extern DWORD dwSound;
 
 int pfnHookUserMsg( char *szMsgName, pfnUserMsgHook pfn );
 
 void HookClient(void);
 void HookEngine(void);
-void HookStudio(void);
 
 #define M_PI 3.14159265358979323846
 #define POW(x) ((x)*(x))
@@ -102,8 +106,8 @@ void HookStudio(void);
 struct local_s {
     int iIndex;
     int iTeam;
-    //int iFlags;
-    int iClip;
+    int iFlags;
+    //int iClip;
     //int iWeaponID;
     //int iFOV;
     //int iUseHull;
@@ -111,17 +115,18 @@ struct local_s {
     //bool bInReload;
     bool bAlive;
     //float m_flNextPrimaryAttack;
-    float flXYspeed;
-    float flMaxSpeed;
-    float flHeight;
-    Vector vForward;
-    Vector vRight;
-    Vector vPunchangle;
-    Vector vNorecoilAng;
+    //float flXYspeed;
+    //float flMaxSpeed;
+    //float flHeight;
+    //Vector vForward;
+    //Vector vRight;
+    //Vector vPunchangle;
+    //Vector vNorecoilAng;
     Vector vOrigin;
-    Vector vEye;
-    Vector vViewOrg;
-    float sin_yaw, minus_cos_yaw; // RADAR
+    //Vector vEye;
+    //Vector vViewOrg;
+    //float sin_yaw, minus_cos_yaw; // RADAR
+    float sinYaw, mCosYaw;
 };
 extern local_s g_Local;
 
@@ -131,7 +136,7 @@ struct player_s {
     bool bUpdated;
     //bool bDucked;
     bool bAlive;
-    //float fDistance;
+    float fDistance;
     vec3_t vHitboxOrigin[12];
     vec3_t vOrigin;
     hud_player_info_t Info;
