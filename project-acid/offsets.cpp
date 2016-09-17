@@ -23,7 +23,7 @@ DWORD Offsets::GetStudioFuncs() {
 DWORD Offsets::PreS_DynamicSound() {
     /*
     $ ==>    > 83EC 48          SUB ESP,48
-	$+9C     > 68 8C41F504      PUSH hw.04F5418C ; ASCII "S_StartDynamicSound: %s volume > 255"
+    $+9C     > 68 8C41F504      PUSH hw.04F5418C ; ASCII "S_StartDynamicSound: %s volume > 255"
     */
     return 0x49c2bc0;
 }

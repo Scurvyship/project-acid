@@ -46,7 +46,7 @@ void HUD_PlayerMove(struct playermove_s *ppmove, int server) {
 
     float yaw = ppmove->angles[1] * (0.017453);
     g_Local.sinYaw  =  sin(yaw);
-	g_Local.mCosYaw = -cos(yaw);
+    g_Local.mCosYaw = -cos(yaw);
 }
 
 void PreS_DynamicSound(int entid, DWORD entchannel, char *szSoundFile, float *fOrigin, float fVolume, float fAttenuation, int iTimeOff, int iPitch) {
