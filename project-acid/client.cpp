@@ -35,13 +35,15 @@ void HUD_Frame(double dTime) {
         bInit = false;
     }
 
-    g_Client.HUD_Frame(dTime);
+    g_Client.HUD_Frame(dTime);              
 }
 
 void HUD_PlayerMove(struct playermove_s *ppmove, int server) {
     g_Client.HUD_PlayerMove(ppmove, server);
 
     g_Local.vOrigin = ppmove->origin; // Get current vector
+    g_Engine.pEventAPI->EV_LocalPlayerViewheight(g_Local.vEye);
+    g_Local.vEye    = g_Local.vEye + ppmove->origin;
     g_Local.iFlags  = ppmove->flags;
 
     float yaw = ppmove->angles[1] * (0.017453);

@@ -123,7 +123,7 @@ struct local_s {
     //Vector vPunchangle;
     //Vector vNorecoilAng;
     Vector vOrigin;
-    //Vector vEye;
+    Vector vEye;
     //Vector vViewOrg;
     //float sin_yaw, minus_cos_yaw; // RADAR
     float sinYaw, mCosYaw;
@@ -149,5 +149,11 @@ struct entity_s {
     char szName[32];
 };
 extern std::vector<entity_s> g_Entity;
+
+struct netdata_s {
+    unsigned short index;
+    float x, y;
+    float sinYaw, mCosYaw;
+};
 
 extern int g_PlayerTeam[33];
