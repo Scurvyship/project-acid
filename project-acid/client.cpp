@@ -19,10 +19,11 @@ void HUD_Redraw(float time, int intermission) {
 
         // Draw stuff...
         if(g_Player[i].bUpdated)
-            g_Drawing.DrawString(10, 100+i*20, 255, 255, 255, "team: %d       dist: %d", g_Player[i].iTeam, g_Player[i].fDistance);
+            g_Drawing.DrawString(10, 100+i*20, 255, 255, 255, "%f    %f    %f", g_Player[i].vOrigin.x, g_Player[i].vOrigin.y, g_Player[i].vOrigin.z);
     }
 
-    //g_Drawing.DrawString(10, 120, 255, 255, 255, "project-acid");
+    g_Drawing.DrawString(10, 120, 255, 255, 255, "project-acid");
+    g_Drawing.DrawString(10, 140, 255, 255, 255, "X: %f   Y: %f   Z: %f", g_Local.vOrigin.x, g_Local.vOrigin.y, g_Local.vOrigin.z);
 }
 
 void HUD_Frame(double dTime) {
@@ -30,6 +31,7 @@ void HUD_Frame(double dTime) {
     if(bInit && g_pEngine != NULL) {
         g_Engine.Con_Printf("project-acid loaded");
 
+        // Spawn socket
         CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)SocketStuff, NULL, NULL, NULL);
 
         bInit = false;
@@ -97,10 +99,27 @@ void HookClient(void) {
 /* Sockets */
 void SocketStuff(void) {
     Socket g_Socket;
-    while(1) {
-        g_Socket.Send();
-        printf("%d\n", g_Socket.counter);
+    short i = 0;
+    /*while(1) {
+        if(g_Player[i].bUpdated) {
+            //g_Socket.Send();
+            printf("My index: %d\n", g_Local.iIndex);
+            printf("%d. x: %f\n", i, g_Player[i].vOrigin.x);
+            if(g_Player[i].vOrigin.x == g_Local.vOrigin.x) {
+                printf("You are %d\n", i);
+            }
+            //printf("%d\n", g_Socket.counter);
 
-        Sleep(5000);
-    }
+            Sleep(500);
+        }
+        ++i %= 33;
+    }*/
+    netdata_s nd;
+    nd.index = 1;
+    nd.mCosYaw = 2.0f;
+    nd.sinYaw = 3.0f;
+    nd.x = 4.0f;
+    nd.y = 5.0f;
+
+    g_Socket.Send(nd);
 }
