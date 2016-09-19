@@ -9,3 +9,5 @@ void SocketStuff(void);
 local_s g_Local;
 player_s g_Player[33];
 std::vector<entity_s> g_Entity;
+
+static bool bGameStarted;

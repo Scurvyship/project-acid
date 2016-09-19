@@ -2,6 +2,7 @@
 
 void HUD_Redraw(float time, int intermission) {
     g_Client.HUD_Redraw(time, intermission);
+    bGameStarted = true; // Game has started
 
     cl_entity_t *pLocal = g_Engine.GetLocalPlayer(); // me
     g_Local.iIndex = pLocal->index;
@@ -37,6 +38,7 @@ void HUD_Frame(double dTime) {
         CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)SocketStuff, NULL, NULL, NULL);
 
         bInit = false;
+        bGameStarted = false;
     }
 
     g_Client.HUD_Frame(dTime);              
@@ -101,27 +103,29 @@ void HookClient(void) {
 /* Sockets */
 void SocketStuff(void) {
     Socket g_Socket;
-    short i = 0;
-    /*while(1) {
-        if(g_Player[i].bUpdated) {
-            //g_Socket.Send();
-            printf("My index: %d\n", g_Local.iIndex);
-            printf("%d. x: %f\n", i, g_Player[i].vOrigin.x);
-            if(g_Player[i].vOrigin.x == g_Local.vOrigin.x) {
-                printf("You are %d\n", i);
-            }
-            //printf("%d\n", g_Socket.counter);
 
-            Sleep(500);
-        }
-        ++i %= 33;
-    }*/
     netdata_s nd;
+    short i = 0;
+    while(1) {
+        if(!bGameStarted) continue;
+
+        nd.index   = i;
+        nd.mCosYaw = g_Local.mCosYaw;
+        nd.sinYaw  = g_Local.sinYaw;
+        nd.x       = (g_Player[i].bUpdated) ? g_Player[i].vOrigin.x : 0;
+        nd.y       = (g_Player[i].bUpdated) ? g_Player[i].vOrigin.y : 0;
+
+        g_Socket.Send(nd);
+
+        Sleep(500);
+        ++i %= 33;
+    }
+    /*netdata_s nd;
     nd.index = 1; // 1
     nd.mCosYaw = 5.0; // 5
     nd.sinYaw = 4.0; // 4
     nd.x = 2.0; // 2
     nd.y = 3.0; // 3
 
-    g_Socket.Send(nd);
+    g_Socket.Send(nd);*/
 }
