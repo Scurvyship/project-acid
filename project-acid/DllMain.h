@@ -156,6 +156,7 @@ extern std::vector<entity_s> g_Entity;
 struct netdata_s {
     //unsigned short index;
     uint8_t index;
+	uint8_t team;
     float x, y;
     float sinYaw, mCosYaw;
 	float vEyeX, vEyeY;

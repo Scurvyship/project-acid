@@ -111,6 +111,7 @@ void SocketStuff(void) {
         if(!bGameStarted) continue;
 
         nd.index   = i;
+		nd.team	   = g_Player[i].iTeam;
         nd.mCosYaw = g_Local.mCosYaw;
         nd.sinYaw  = g_Local.sinYaw;
         nd.x       = (g_Player[i].bUpdated) ? g_Player[i].vOrigin[0] : 0;
@@ -120,7 +121,7 @@ void SocketStuff(void) {
 
         g_Socket.Send(nd);
 
-        Sleep(500);
+        //Sleep(500);
         ++i %= 33;
     }
     /*nd.index = 1; // 1
@@ -130,6 +131,7 @@ void SocketStuff(void) {
     nd.y = 3.0; // 3
 	nd.vEyeX = 6.0; // 6
 	nd.vEyeY = 7.0; // 7
+	nd.team = 9;
 
     g_Socket.Send(nd);*/
 }

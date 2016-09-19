@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="author" content="T.B.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>:: PROJECT-ACID ::</title>
 
     <style>
@@ -33,14 +34,18 @@
         centerY = canvas.height / 2;
         context.beginPath();
         context.lineWidth = 2; context.strokeStyle = '#FFFFFF';
-        context.moveTo(centerX, centerY - 80);
-        context.lineTo(centerX, centerY + 80);
+        //context.moveTo(centerX, centerY - 80);
+        context.moveTo(centerX, 0);
+        //context.lineTo(centerX, centerY + 80);
+        context.lineTo(centerX, canvas.height);
         context.stroke();
 
         context.beginPath();
         context.lineWidth = 2; context.strokeStyle = '#FFFFFF';
-        context.moveTo(centerX - 80, centerY);
-        context.lineTo(centerX + 80, centerY);
+        //context.moveTo(centerX - 80, centerY);
+        context.moveTo(0, centerY);
+        //context.lineTo(centerX + 80, centerY);
+        context.lineTo(canvas.width, centerY);
         context.stroke();
     }
 
@@ -62,7 +67,7 @@
         x =  dy*mCosYaw + dx*sinYaw;
         y =  dx*mCosYaw - dy*sinYaw;
         range = 3500.00;
-        size  = 100.00;
+        size  = 500.00;
 
         if(Math.abs(x) > range || Math.abs(y) > range) {
             if(y > x) {
@@ -99,12 +104,6 @@
                     //document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
                     playerData = JSON.parse(XMLHttp.responseText);
                 }
-                else if (XMLHttp.status == 400) {
-                    alert('There was an error 400');
-                }
-                else {
-                    alert('something else other than 200 was returned');
-                }
             }
         };
 
@@ -134,7 +133,7 @@
         for (i = 0; i < 33; i++) {
             console.log(i + ": X: " + test[i].x);
         }*/
-        setInterval(drawPlayers, 10);
+        setInterval(drawPlayers, 1);
     }
 
     function drawPlayers() {
@@ -145,7 +144,7 @@
         for (i = 0; i < 33; i++) {
             if (playerData[i].x == 0 && playerData[i].y == 0) continue;
             var enemyPos = clp(playerData[i].x, playerData[i].y, playerData[-1].vEyeX, playerData[-1].vEyeY, playerData[-1].mCosYaw, playerData[-1].sinYaw);
-            DrawRectangle(enemyPos[0], enemyPos[1], '#0000ff');
+            DrawRectangle(enemyPos[0], enemyPos[1], playerData[i].team == 1 ? '#ff0000' : '#0000ff');
         }
     }
 </script>
