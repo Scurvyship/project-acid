@@ -10,8 +10,8 @@ def main():
 
     print('Socket bound, receiving data...')
     while True:
-        data, addr = sock.recvfrom(256) # buffer size is 20 bytes
-        print(data)
+        data, addr = sock.recvfrom(18) # buffer size is 20 bytes
+        print([hex(c) for c in data])
 
 
 if __name__ == '__main__':

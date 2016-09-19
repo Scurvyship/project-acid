@@ -151,10 +151,14 @@ struct entity_s {
 };
 extern std::vector<entity_s> g_Entity;
 
+//#pragma pack(push, 1)
+#pragma pack(1)
 struct netdata_s {
-    unsigned short index;
+    //unsigned short index;
+    uint8_t index;
     float x, y;
     float sinYaw, mCosYaw;
 };
+#pragma pack()
 
 extern int g_PlayerTeam[33];

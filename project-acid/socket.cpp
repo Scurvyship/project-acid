@@ -1,4 +1,5 @@
 #include "socket.h"
+#define VERBOSE 1
 
 Socket::Socket() {
     // Init winsock
@@ -19,7 +20,7 @@ Socket::Socket() {
         return;
     }
 
-    // Setup some structures
+    // Setup the structure
     this->RecvAddr.sin_family = AF_INET;
     this->RecvAddr.sin_port = htons(PORT);
     this->RecvAddr.sin_addr.s_addr = inet_addr(IP);
@@ -31,13 +32,17 @@ Socket::~Socket() {
 }
 
 void Socket::Send(struct netdata_s netdata) {
-    printf("sizeof netdata: %d", sizeof(struct netdata_s)); // 20
-    char buffer[256];
-    //memcpy_s(buffer, sizeof(netdata), &netdata, sizeof(netdata));
+    printf("sizeof netdata: %d", sizeof(struct netdata_s)); // 18
+    char buffer[sizeof(struct netdata_s)];
     memcpy(buffer, &netdata, sizeof(netdata));
 
     this->iResult = sendto(this->SendSocket, buffer, sizeof(buffer), 0, (SOCKADDR *)&this->RecvAddr, sizeof(this->RecvAddr));
     if(this->iResult == SOCKET_ERROR) {
         printf("Sendto failed, error: %d", WSAGetLastError());
     }
+
+    // Dbg
+#ifdef VERBOSE
+    printf("Sent %d bytes.\n", this->iResult);
+#endif
 }

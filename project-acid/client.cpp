@@ -19,11 +19,13 @@ void HUD_Redraw(float time, int intermission) {
 
         // Draw stuff...
         if(g_Player[i].bUpdated)
-            g_Drawing.DrawString(10, 100+i*20, 255, 255, 255, "%f    %f    %f", g_Player[i].vOrigin.x, g_Player[i].vOrigin.y, g_Player[i].vOrigin.z);
+            //g_Drawing.DrawString(10, 100+i*20, 255, 255, 255, "%f    %f    %f", g_Player[i].vOrigin.x, g_Player[i].vOrigin.y, g_Player[i].vOrigin.z);
+            __asm nop
     }
 
     g_Drawing.DrawString(10, 120, 255, 255, 255, "project-acid");
     g_Drawing.DrawString(10, 140, 255, 255, 255, "X: %f   Y: %f   Z: %f", g_Local.vOrigin.x, g_Local.vOrigin.y, g_Local.vOrigin.z);
+    g_Drawing.DrawString(10, 160, 255, 255, 255, "sinYaw: %f   mCosYaw: %f", g_Local.sinYaw, g_Local.mCosYaw);
 }
 
 void HUD_Frame(double dTime) {
@@ -115,11 +117,11 @@ void SocketStuff(void) {
         ++i %= 33;
     }*/
     netdata_s nd;
-    nd.index = 1;
-    nd.mCosYaw = 2.0f;
-    nd.sinYaw = 3.0f;
-    nd.x = 4.0f;
-    nd.y = 5.0f;
+    nd.index = 1; // 1
+    nd.mCosYaw = 5.0; // 5
+    nd.sinYaw = 4.0; // 4
+    nd.x = 2.0; // 2
+    nd.y = 3.0; // 3
 
     g_Socket.Send(nd);
 }
