@@ -9,12 +9,23 @@ players = {}
 
 class MyRequestHandler(BaseHTTPRequestHandler): # my hook
     def do_GET(self):
-        if self.path == '/pos':
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps(players).encode('utf-8'))
-            #http://stackoverflow.com/questions/1094185/how-to-serve-any-file-type-with-pythons-basehttprequesthandler
+        try:
+            if self.path == '/': # Load index.html
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+                fp = open('index.html')
+                self.wfile.write(fp.read().encode('utf-8'))
+                fp.close()
+
+            if self.path == '/pos':
+                self.send_response(200)
+                self.send_header('Content-type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(players).encode('utf-8'))
+                #http://stackoverflow.com/questions/1094185/how-to-serve-any-file-type-with-pythons-basehttprequesthandler
+        except IOError:
+            self.send_error(404, 'File not found: %s' % self.path)
 
 def main():
     UDP_IP = "127.0.0.1"
@@ -38,7 +49,6 @@ def main():
         #print(test)
         # Populate the object
         players[test[0]] = {
-            'index': test[0],
             'x': test[1],
             'y': test[2]
         }
