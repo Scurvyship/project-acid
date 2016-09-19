@@ -158,6 +158,7 @@ struct netdata_s {
     uint8_t index;
     float x, y;
     float sinYaw, mCosYaw;
+	float vEyeX, vEyeY;
 };
 #pragma pack()
 

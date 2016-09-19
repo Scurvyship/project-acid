@@ -41,18 +41,18 @@ def main():
         
     print('Socket bound, receiving data...')
     while True:
-        data, addr = sock.recvfrom(20) # 18 bytes, the buffer/struct size
-        #print(data)
+        data, addr = sock.recvfrom(25) # 25 bytes, the buffer/struct size
+        print(data)
         #print([hex(c) for c in data])
         #print(len(data))
-        test = struct.unpack('<Bffff', data)
+        uData = struct.unpack('<Bffffff', data)
         #print(test)
         # Populate the object
-        players[test[0]] = {
-            'x': test[1],
-            'y': test[2]
+        players[uData[0]] = {
+            'x': uData[1],
+            'y': uData[2]
         }
-        players[-1] = {'sinYaw': test[3], 'mCosYaw': test[4]}
+        players[-1] = {'sinYaw': uData[3], 'mCosYaw': uData[4], 'vEyeX': uData[5], 'vEyeY': uData[6]}
         print(players)
 
 

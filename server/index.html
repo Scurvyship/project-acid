@@ -4,8 +4,150 @@
     <meta charset="utf-8">
     <meta name="author" content="T.B.">
     <title>:: PROJECT-ACID ::</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+        }
+    </style>
 </head>
 <body>
-    <p>Works?</p>
+    <canvas id="canvas"></canvas>
 </body>
+
+<script>
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var playerData;
+
+    function ResizeCanvas() {
+        canvas.width  = window.innerWidth - 0;
+        canvas.height = window.innerHeight - 5;
+
+        draw();
+    }
+
+    function DrawCrosshair(centerX, centerY) {
+        centerX = canvas.width  / 2;
+        centerY = canvas.height / 2;
+        context.beginPath();
+        context.lineWidth = 2; context.strokeStyle = '#FFFFFF';
+        context.moveTo(centerX, centerY - 80);
+        context.lineTo(centerX, centerY + 80);
+        context.stroke();
+
+        context.beginPath();
+        context.lineWidth = 2; context.strokeStyle = '#FFFFFF';
+        context.moveTo(centerX - 80, centerY);
+        context.lineTo(centerX + 80, centerY);
+        context.stroke();
+    }
+
+    function DrawRectangle(x, y, color) {
+        context.beginPath();
+        context.rect(x, y, 10, 10);
+        context.fillStyle = color;
+        context.fill();
+        context.lineWidth = 1;
+        context.strokeStyle = color;
+        context.stroke();
+    }
+
+    var clp = function CalcRadarPoint(originX, originY, vEyeX, vEyeY, mCosYaw, sinYaw) {
+        displayCenterX = canvas.width  / 2;
+        displayCenterY = canvas.height / 2;
+        dx = originX - vEyeX;
+        dy = originY - vEyeY;
+        x =  dy*mCosYaw + dx*sinYaw;
+        y =  dx*mCosYaw - dy*sinYaw;
+        range = 3500.00;
+        size  = 100.00;
+
+        if(Math.abs(x) > range || Math.abs(y) > range) {
+            if(y > x) {
+                if(y > -x) {
+                    x = range * x / y;
+                    y = range;
+                }else {
+                    y = -range * y / x;
+                    x = -range;
+                }
+            }else {
+                if(y > -x) {
+                    y = range * y / x;
+                    x = range;
+                }else {
+                    x = -range * x / y;
+                    y = -range;
+                }
+            }
+        }
+
+        posX = displayCenterX + (x / range * size);
+        posY = displayCenterY + (y / range * size);
+
+        return [Math.floor(posX), Math.floor(posY)];
+    }
+
+    function LoadData() {
+        var XMLHttp = new XMLHttpRequest();
+
+        XMLHttp.onreadystatechange = function () {
+            if (XMLHttp.readyState == XMLHttpRequest.DONE) {
+                if (XMLHttp.status == 200) {
+                    //document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+                    playerData = JSON.parse(XMLHttp.responseText);
+                }
+                else if (XMLHttp.status == 400) {
+                    alert('There was an error 400');
+                }
+                else {
+                    alert('something else other than 200 was returned');
+                }
+            }
+        };
+
+        XMLHttp.open("GET", "/pos", true);
+        XMLHttp.send();
+    }
+
+    // Resize the canvas on window resize
+    window.addEventListener('resize', ResizeCanvas, false);
+
+    // Resize it for the first time
+    ResizeCanvas();
+
+    function draw() {
+        if (!canvas.getContext) return;
+
+        var context = canvas.getContext('2d');
+
+        context.save(); // save this
+
+        //var enemyPos = clp(384.031250, 2091.914063, 800.875000, 2270.726563, 0.833517, -0.552493);
+        //DrawRectangle(enemyPos[0], enemyPos[1], '#ff0000');
+
+
+        /*console.log(aa);
+        test = JSON.parse(aa)
+        for (i = 0; i < 33; i++) {
+            console.log(i + ": X: " + test[i].x);
+        }*/
+        setInterval(drawPlayers, 10);
+    }
+
+    function drawPlayers() {
+        LoadData();
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        DrawCrosshair();
+        //console.log(playerData[0].x);
+        for (i = 0; i < 33; i++) {
+            if (playerData[i].x == 0 && playerData[i].y == 0) continue;
+            var enemyPos = clp(playerData[i].x, playerData[i].y, playerData[-1].vEyeX, playerData[-1].vEyeY, playerData[-1].mCosYaw, playerData[-1].sinYaw);
+            DrawRectangle(enemyPos[0], enemyPos[1], '#0000ff');
+        }
+    }
+</script>
+
 </html>

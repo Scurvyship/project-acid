@@ -27,6 +27,7 @@ void HUD_Redraw(float time, int intermission) {
     g_Drawing.DrawString(10, 120, 255, 255, 255, "project-acid");
     g_Drawing.DrawString(10, 140, 255, 255, 255, "X: %f   Y: %f   Z: %f", g_Local.vOrigin.x, g_Local.vOrigin.y, g_Local.vOrigin.z);
     g_Drawing.DrawString(10, 160, 255, 255, 255, "sinYaw: %f   mCosYaw: %f", g_Local.sinYaw, g_Local.mCosYaw);
+	g_Drawing.DrawString(10, 180, 255, 255, 255, "vEye0: %f   vEye1: %f", g_Local.vEye[0], g_Local.vEye[1]);
 }
 
 void HUD_Frame(double dTime) {
@@ -112,20 +113,23 @@ void SocketStuff(void) {
         nd.index   = i;
         nd.mCosYaw = g_Local.mCosYaw;
         nd.sinYaw  = g_Local.sinYaw;
-        nd.x       = (g_Player[i].bUpdated) ? g_Player[i].vOrigin.x : 0;
-        nd.y       = (g_Player[i].bUpdated) ? g_Player[i].vOrigin.y : 0;
+        nd.x       = (g_Player[i].bUpdated) ? g_Player[i].vOrigin[0] : 0;
+        nd.y       = (g_Player[i].bUpdated) ? g_Player[i].vOrigin[1] : 0;
+		nd.vEyeX   = g_Local.vEye[0];
+		nd.vEyeY   = g_Local.vEye[1];
 
         g_Socket.Send(nd);
 
         Sleep(500);
         ++i %= 33;
     }
-    /*netdata_s nd;
-    nd.index = 1; // 1
+    /*nd.index = 1; // 1
     nd.mCosYaw = 5.0; // 5
     nd.sinYaw = 4.0; // 4
     nd.x = 2.0; // 2
     nd.y = 3.0; // 3
+	nd.vEyeX = 6.0; // 6
+	nd.vEyeY = 7.0; // 7
 
     g_Socket.Send(nd);*/
 }
