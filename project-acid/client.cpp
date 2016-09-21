@@ -24,10 +24,13 @@ void HUD_Redraw(float time, int intermission) {
             __asm nop
     }
 
+#ifdef VERBOSE
     g_Drawing.DrawString(10, 120, 255, 255, 255, "project-acid");
     g_Drawing.DrawString(10, 140, 255, 255, 255, "X: %f   Y: %f   Z: %f", g_Local.vOrigin.x, g_Local.vOrigin.y, g_Local.vOrigin.z);
     g_Drawing.DrawString(10, 160, 255, 255, 255, "sinYaw: %f   mCosYaw: %f", g_Local.sinYaw, g_Local.mCosYaw);
     g_Drawing.DrawString(10, 180, 255, 255, 255, "vEye0: %f   vEye1: %f", g_Local.vEye[0], g_Local.vEye[1]);
+#endif
+
 }
 
 void HUD_Frame(double dTime) {

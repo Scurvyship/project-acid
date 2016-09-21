@@ -1,5 +1,4 @@
 #include "socket.h"
-#define VERBOSE 1
 
 Socket::Socket() {
     // Init winsock
@@ -32,7 +31,9 @@ Socket::~Socket() {
 }
 
 void Socket::Send(struct netdata_s netdata) {
+#ifdef VERBOSE
     printf("sizeof netdata: %d", sizeof(struct netdata_s)); // 25
+#endif
     char buffer[sizeof(struct netdata_s)];
     memcpy(buffer, &netdata, sizeof(netdata));
 

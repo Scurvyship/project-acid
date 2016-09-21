@@ -103,39 +103,22 @@ void HookEngine(void);
 #define VectorMul(vec,num,res){(res)[0]=(vec)[0]*(num);(res)[1]=(vec)[1]*(num);(res)[2]=(vec)[2]*(num);}
 #define VectorSubtract(a,b,c) {(c)[0]=(a)[0]-(b)[0];(c)[1]=(a)[1]-(b)[1];(c)[2]=(a)[2]-(b)[2];}
 #define Square(a) ((a)*(a))
+#define VERBOSE 0
 
 struct local_s {
     int iIndex;
     int iTeam;
     int iFlags;
-    //int iClip;
-    //int iWeaponID;
-    //int iFOV;
-    //int iUseHull;
-    //int iMovetype;
-    //bool bInReload;
     bool bAlive;
-    //float m_flNextPrimaryAttack;
-    //float flXYspeed;
-    //float flMaxSpeed;
-    //float flHeight;
-    //Vector vForward;
-    //Vector vRight;
-    //Vector vPunchangle;
-    //Vector vNorecoilAng;
     Vector vOrigin;
     Vector vEye;
-    //Vector vViewOrg;
-    //float sin_yaw, minus_cos_yaw; // RADAR
     float sinYaw, mCosYaw;
 };
 extern local_s g_Local;
 
 struct player_s {
     int iTeam;
-    //bool bVisible;
     bool bUpdated;
-    //bool bDucked;
     bool bAlive;
     float fDistance;
     vec3_t vHitboxOrigin[12];
